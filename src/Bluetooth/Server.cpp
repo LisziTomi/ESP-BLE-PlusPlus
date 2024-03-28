@@ -10,6 +10,10 @@ static uint8_t adv_service_uuid128[] =
     0x00, 0x10, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
 };
 
+esp_bluedroid_config_t Server::BluedroidConfig = {
+    .ssp_en = true,
+};
+
 esp_ble_adv_data_t Server::AdvertisingData = {
     .set_scan_rsp = false,
     .include_name = true,
@@ -47,10 +51,10 @@ esp_ble_adv_params_t Server::AdvertisingParameters = {
     .adv_int_max        = 0x40,
     .adv_type           = ADV_TYPE_IND,
     .own_addr_type      = BLE_ADDR_TYPE_PUBLIC,
-    //.peer_addr            =
-    //.peer_addr_type       =
+    .peer_addr          = 0,
+    .peer_addr_type     = BLE_ADDR_TYPE_PUBLIC,
     .channel_map        = ADV_CHNL_ALL,
-    .adv_filter_policy = ADV_FILTER_ALLOW_SCAN_ANY_CON_ANY,
+    .adv_filter_policy  = ADV_FILTER_ALLOW_SCAN_ANY_CON_ANY,
 };
 
 std::vector<Service*> Server::Services;
@@ -167,7 +171,7 @@ void Server::Enable()
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
     esp_bt_controller_init(&bt_cfg);
     esp_bt_controller_enable(ESP_BT_MODE_BLE);
-    esp_bluedroid_init();
+    esp_bluedroid_init_with_cfg(&BluedroidConfig);
     esp_bluedroid_enable();
 
     esp_ble_gatts_register_callback(HandleGATTSevents);  

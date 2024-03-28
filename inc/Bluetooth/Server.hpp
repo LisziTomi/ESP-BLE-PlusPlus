@@ -17,6 +17,8 @@ namespace Bluetooth
         static const uint8_t MaxEventNumber = 24;
         static const uint8_t MainEventAmount = 16;
 
+        static esp_bluedroid_config_t BluedroidConfig;
+
         static const char* Name;
         static esp_ble_adv_params_t AdvertisingParameters;
         static esp_ble_adv_data_t AdvertisingData;

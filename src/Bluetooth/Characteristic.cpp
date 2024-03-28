@@ -18,7 +18,7 @@ static inline void AddNotificationDescriptor(uint16_t ServiceHandler)
 {
     static esp_bt_uuid_t DescriptorUUID{
         .len = ESP_UUID_LEN_16,
-        { .uuid16 = ESP_GATT_UUID_CHAR_CLIENT_CONFIG, }
+        .uuid = { .uuid16 = ESP_GATT_UUID_CHAR_CLIENT_CONFIG, }
     };
 
     esp_ble_gatts_add_char_descr(ServiceHandler, &DescriptorUUID,  
