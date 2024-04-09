@@ -2,6 +2,7 @@
 using namespace Bluetooth;
 
 bool Server::isEnabled = false;
+bool Server::isConnected = false;
 esp_gatt_if_t BLE::GATTinterface = 0;
 const char* Server::Name = "None";
 static uint8_t adv_service_uuid128[] = 
@@ -217,9 +218,19 @@ void Server::HandleGATTSevents(esp_gatts_cb_event_t event, esp_gatt_if_t gattsif
     if(event < MainEventAmount && MainEvents[event])
         MainEvents[event](param);
 
-    if(event == ESP_GATTS_REG_EVT)
+    switch (event)
     {
-        GATTinterface = gattsif;
-        Start();
+        case ESP_GATTS_CONNECT_EVT:
+            isConnected = true;
+            break;
+        case ESP_GATTS_DISCONNECT_EVT:
+            isConnected = false;
+            break;
+        case ESP_GATTS_REG_EVT:
+            GATTinterface = gattsif;
+            Start();
+            break;
+        default:
+            break;
     }
 }

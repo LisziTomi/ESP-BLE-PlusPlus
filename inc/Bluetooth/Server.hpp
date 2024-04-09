@@ -36,6 +36,7 @@ namespace Bluetooth
         static void Start();
 
         static bool isEnabled;
+        static bool isConnected;
 
         static inline void ServicesInit();
         static inline void ConnectionInit();
@@ -47,6 +48,7 @@ namespace Bluetooth
         void Set(esp_gap_ble_cb_event_t event, GAPcallback* call) { GAPcalls[event] = call; }
 
         static bool Status() { return isEnabled; }
+        static bool Connected() { return isConnected; }
         static void Enable();
         static void Disable();
     };
