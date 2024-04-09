@@ -14,7 +14,7 @@ namespace Bluetooth
         typedef std::function<void(const Characteristic*, esp_ble_gatts_cb_param_t*)> ReadCallback;
         typedef std::function<void(Characteristic*, const uint16_t, const void*)> WriteCallback;
     
-        esp_attr_value_t  CharData;
+        esp_attr_value_t CharData{0, 0, nullptr};
         const esp_gatt_perm_t Permition;
         const esp_gatt_char_prop_t Property;
 
